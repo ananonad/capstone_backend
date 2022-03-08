@@ -17,9 +17,11 @@ mongoose.connection
     .on("error", (error) => console.log(error));
 
 
-app.get("/", (req, res) => {
-    res.send("hello world");
-});
+    
+    app.use(cors()); // to prevent cors errors, open access to all origins
+    app.use(morgan("dev")); // logging
+    app.use(express.json()); // parse json bodies
+
 
 
 app.listen(PORT, () => console.log(`listening on PORT ${PORT}`));

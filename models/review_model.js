@@ -7,6 +7,17 @@ const reviewSchema = new mongoose.Schema(
             max: [5, 'Rating must be from 1 to 5 stars.'],
             required: true
         },
-        title
+        title: {
+            type: String,
+            required: true
+        },
+        description: {
+            type: String,
+            required: true
+        }
     }
 )
+
+const Review = mongoose.model('Review', reviewSchema);
+
+module.exports = Review;
