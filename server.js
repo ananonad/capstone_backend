@@ -18,9 +18,9 @@ mongoose.connection
 
 
     
-    app.use(cors()); // to prevent cors errors, open access to all origins
-    app.use(morgan("dev")); // logging
-    app.use(express.json()); // parse json bodies
+    app.use(cors());
+    app.use(morgan("dev")); 
+    app.use(express.json()); 
 
 
 
