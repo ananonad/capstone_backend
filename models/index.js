@@ -1,4 +1,4 @@
-
+require("../config/db.connection");
 
 module.exports ={
     List: require('./list_model'),

@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const reviewSchema = new mongoose.Schema(
     {
         rating: {
+            type: Number,
             min: [1, 'Rating must be from 1 to 5 stars.'],
             max: [5, 'Rating must be from 1 to 5 stars.'],
             required: true
@@ -18,6 +19,5 @@ const reviewSchema = new mongoose.Schema(
     }
 )
 
-const Review = mongoose.model('Review', reviewSchema);
 
-module.exports = Review;
+module.exports = Review  = mongoose.model('Review', reviewSchema);

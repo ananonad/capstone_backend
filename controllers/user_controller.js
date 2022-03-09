@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const { List } = require("../models");
-const { modelName} = require("../models/list_model");
+const { User } = require("../models");
+
 
 
 router.get("/", async (req, res) => {
     try {
-    res.json(await List.find({}));
+    res.json(await User.find({}));
     } catch (error) {
     
     res.status(400).json(error);
@@ -15,7 +15,7 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res, next) => {
     try {
-    const list = await List.create(req.body);
+    const user = await User.create(req.body);
     return res.status(200).json(list)
     } catch (error) {
     res.status(400).json(error);
@@ -26,7 +26,7 @@ router.post("/", async (req, res, next) => {
 router.put("/:id", async (req, res) => {
     try {
         res.json(
-            await List.findByIdAndUpdate(req.params.id, req.body, { new: true })
+            await User.findByIdAndUpdate(req.params.id, req.body, { new: true })
         );
     } catch (error) {
         res.status(400).json(error);
@@ -35,10 +35,8 @@ router.put("/:id", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
     try {
-        res.json(await List.findByIdAndRemove(req.params.id));
+        res.json(await User.findByIdAndRemove(req.params.id));
     } catch (error) {
         res.status(400).json(error)
     }
 })
-
-module.exports = router
