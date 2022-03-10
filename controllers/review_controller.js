@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { Review, List } = require("../models");
+const { Review } = require("../models");
 
 
 
