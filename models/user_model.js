@@ -12,13 +12,28 @@ const userSchema = new mongoose.Schema(
             required: true,
             unique: true,
         },
+        password: {
+            type: String,
+            min: 8,
+            max: 20,
+            required:[true, "Password, minimum 8 and max 20 characters long."]
+        },
         location: {
             type: String,
             required: true,
         },
         image: {
             type: String,
-        }
+        },
+        review: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Review" 
+        },
+        post: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Post"
+        }],
+        timestamps: true,
     }
 );
 

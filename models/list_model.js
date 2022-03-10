@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 const listSchema = new mongoose.Schema(
     {
@@ -18,6 +19,10 @@ const listSchema = new mongoose.Schema(
             type: String,
             required: true
         },
+        reviews: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Review"
+        }]  
     }
 );
 

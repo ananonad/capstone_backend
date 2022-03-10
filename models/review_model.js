@@ -15,7 +15,19 @@ const reviewSchema = new mongoose.Schema(
         description: {
             type: String,
             required: true
-        }
+        },
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+        },
+        lists: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "List",
+        }],
+        date: {
+            type: Date,
+            default: Date.now,
+        },
     }
 )
 
