@@ -24,7 +24,7 @@ const controllers = require('./controllers/index');
     app.use('/post', controllers.post);
     app.use('/review', controllers.review);
 
-    app.get("/", (req, res) => {
+    app.get("/ping", (req, res) => {
         res.send("Hello World");
     });
 
