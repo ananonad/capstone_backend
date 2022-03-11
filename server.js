@@ -20,11 +20,11 @@ const controllers = require('./controllers/index');
     app.use(express.urlencoded({ extended: true }));
     app.use(express.static("public"));
     app.use('/list', controllers.list);
-    // app.use('/', controllers.user);
+    app.use('/users', controllers.user);
     app.use('/post', controllers.post);
     app.use('/review', controllers.review);
 
-    app.get("/ping", (req, res) => {
+    app.get("/", (req, res) => {
         res.send("Hello World");
     });
 
