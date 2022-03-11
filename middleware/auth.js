@@ -1,41 +1,41 @@
-const jwt = require('jsonwebtoken');
+// const jwt = require('jsonwebtoken');
 
-const auth = (req, res, next) => {
+// const auth = (req, res, next) => {
 
-  try {
+//   try {
 
-    const token = req.header('x-auth-token');
+//     const token = req.header('x-auth-token');
 
-    if (!token) {
-      return res.status(401).json(
-        { 
-          error: 'Not authorized with token: Denied'
-        }
-      );
-    } 
+//     if (!token) {
+//       return res.status(401).json(
+//         { 
+//           error: 'Not authorized with token: Denied'
+//         }
+//       );
+//     } 
 
-    const verified = jwt.verify(token, process.env.JWT_SECRET);
+//     const verified = jwt.verify(token, process.env.JWT_SECRET);
 
-    if (!verified) {
-      return res.status(401).json(
-        { 
-          message: 'Token was not verified: Denied',
-        }
-      );
-    }
+//     if (!verified) {
+//       return res.status(401).json(
+//         { 
+//           message: 'Token was not verified: Denied',
+//         }
+//       );
+//     }
 
-    req.user = verified; // .id ???
+//     req.user = verified; // .id ???
 
-    next();
+//     next();
 
-  } catch (err) {
+//   } catch (err) {
   
-    res.status(500).json(
-      {
-        error: err.message
-      }
-    );
-  }
-}
+//     res.status(500).json(
+//       {
+//         error: err.message
+//       }
+//     );
+//   }
+// }
 
-module.exports = auth;
+// module.exports = auth;
