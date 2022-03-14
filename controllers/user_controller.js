@@ -10,15 +10,16 @@ const auth = require('../middleware/auth');
 
 /* Register */
 router.post('/register', async (req, res) => {
+
     try {
 
     let { username, email, location, password} = req.body;
 
     if (!email || !location || !password) {
         return res.status(400).json(
-        { 
-            message: 'Missing fields; all fields are required' 
-        }
+            { 
+                message: 'Missing fields; all fields are required' 
+            }
         );
     }
 
@@ -42,21 +43,19 @@ router.post('/register', async (req, res) => {
 
     if (existingUser) {
         return res.status(400).json(
-        { 
-            message: 'Email is already associated with an account',
-        }
+            { 
+                message: 'Email is already associated with an account',
+            }
         );
     }
 
     const salt = await bcrypt.genSalt();
     const passwordHash = await bcrypt.hash(password, salt);
     const newUser = new User({
-
-        username,
+        userName: username,
         email,
         location, 
         password: passwordHash,
-
     });
 
     const savedUser = await newUser.save();
@@ -64,11 +63,11 @@ router.post('/register', async (req, res) => {
     res.json(savedUser);
 
     } catch (err) {
-    res.status(500).json(
-        {
-        error: err.message, 
-        }
-    );
+        res.status(500).json(
+            {
+                error: err.message, 
+            }
+        );
     }
 });
 

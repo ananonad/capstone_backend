@@ -3,13 +3,20 @@ const { PORT, MONGODB_URL } = process.env;
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
 const cors = require("cors");
 const morgan = require("morgan");
 const methodOverride = require("method-override");
 const connection = require("./config/db.connection.js");
 const controllers = require('./controllers/index');
 
-
+// Bodyparser middleware
+app.use(
+    bodyParser.urlencoded({
+      extended: false
+    })
+  );
+app.use(bodyParser.json());
 
 
 //middleware  
