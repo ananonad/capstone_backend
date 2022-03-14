@@ -14,9 +14,9 @@ const userSchema = new mongoose.Schema(
         },
         password: {
             type: String,
-            min: 8,
-            max: 20,
-            required:[true, "Password, minimum 8 and max 20 characters long."]
+            // min: 8,
+            // max: 20,
+            // required:[true, "Password, minimum 8 and max 20 characters long."]
         },
         location: {
             type: String,
@@ -25,14 +25,14 @@ const userSchema = new mongoose.Schema(
         image: {
             type: String,
         },
-        review: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Review" 
-        },
-        post: [{
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Post"
-        }],
+        // review: [{
+        //     type: mongoose.Schema.Types.ObjectId,
+        //     ref: "Review" 
+        // }],
+        // post: [{
+        //     type: mongoose.Schema.Types.ObjectId,
+        //     ref: "Post"
+        // }],
     }
 );
 

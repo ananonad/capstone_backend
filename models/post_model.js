@@ -21,6 +21,7 @@ const postSchema = new mongoose.Schema(
         user: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",
+            default: "622f8f427a42cdd2ae251063"
         },
     }
 );

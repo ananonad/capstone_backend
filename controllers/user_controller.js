@@ -12,9 +12,9 @@ const auth = require('../middleware/auth');
 router.post('/register', async (req, res) => {
     try {
 
-    let { username, email, password, passwordCheck } = req.body;
+    let { username, email, location, password} = req.body;
 
-    if (!email || !password || !passwordCheck) {
+    if (!email || !location || !password) {
         return res.status(400).json(
         { 
             message: 'Missing fields; all fields are required' 
@@ -22,21 +22,21 @@ router.post('/register', async (req, res) => {
         );
     }
 
-    if (password.length < 8) {
-        return res.status(400).json(
-        {
-            message: 'Password must be at least 8 characters',
-        }
-        );
-    }
+    // if (password.length < 8) {
+    //     return res.status(400).json(
+    //     {
+    //         message: 'Password must be at least 8 characters',
+    //     }
+    //     );
+    // }
 
-    if (password !== passwordCheck) {
-        return res.status(400).json(
-        { 
-            message: 'Passwords do not match', 
-        }
-        );
-    }
+    // if (password !== passwordCheck) {
+    //     return res.status(400).json(
+    //     { 
+    //         message: 'Passwords do not match', 
+    //     }
+    //     );
+    // }
 
     const existingUser = await User.findOne({ email: email });
 
@@ -53,7 +53,8 @@ router.post('/register', async (req, res) => {
     const newUser = new User({
 
         username,
-        email, 
+        email,
+        location, 
         password: passwordHash,
 
     });
