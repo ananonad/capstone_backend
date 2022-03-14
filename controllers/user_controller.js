@@ -13,54 +13,54 @@ router.post('/register', async (req, res) => {
 
     try {
 
-    let { username, email, location, password} = req.body;
+        let { username, email, location, password} = req.body;
 
-    if (!email || !location || !password) {
-        return res.status(400).json(
-            { 
-                message: 'Missing fields; all fields are required' 
-            }
-        );
-    }
+        if (!email || !location || !password) {
+            return res.status(400).json(
+                { 
+                    message: 'Missing fields; all fields are required' 
+                }
+            );
+        }
 
-    // if (password.length < 8) {
-    //     return res.status(400).json(
-    //     {
-    //         message: 'Password must be at least 8 characters',
-    //     }
-    //     );
-    // }
+        // if (password.length < 8) {
+        //     return res.status(400).json(
+        //     {
+        //         message: 'Password must be at least 8 characters',
+        //     }
+        //     );
+        // }
 
-    // if (password !== passwordCheck) {
-    //     return res.status(400).json(
-    //     { 
-    //         message: 'Passwords do not match', 
-    //     }
-    //     );
-    // }
+        // if (password !== passwordCheck) {
+        //     return res.status(400).json(
+        //     { 
+        //         message: 'Passwords do not match', 
+        //     }
+        //     );
+        // }
 
-    const existingUser = await User.findOne({ email: email });
+        const existingUser = await User.findOne({ email: email });
 
-    if (existingUser) {
-        return res.status(400).json(
-            { 
-                message: 'Email is already associated with an account',
-            }
-        );
-    }
+        if (existingUser) {
+            return res.status(400).json(
+                { 
+                    message: 'Email is already associated with an account',
+                }
+            );
+        }
 
-    const salt = await bcrypt.genSalt();
-    const passwordHash = await bcrypt.hash(password, salt);
-    const newUser = new User({
-        userName: username,
-        email,
-        location, 
-        password: passwordHash,
-    });
+        const salt = await bcrypt.genSalt();
+        const passwordHash = await bcrypt.hash(password, salt);
+        const newUser = new User({
+            userName: username,
+            email,
+            location, 
+            password: passwordHash,
+        });
 
-    const savedUser = await newUser.save();
+        const savedUser = await newUser.save();
 
-    res.json(savedUser);
+        res.json(savedUser);
 
     } catch (err) {
         res.status(500).json(
@@ -73,56 +73,58 @@ router.post('/register', async (req, res) => {
 
 /* Login */
 router.post('/login', async (req, res) => {
+
     try {
-    
-    const { email, password } = req.body;
+        const { email, password } = req.body;
 
-    if(!email || !password) {
-        return res.status(400).json(
-        {
-            message: 'All fields are required',
+        if(!email || !password) {
+            return res.status(400).json(
+                {
+                    message: 'All fields are required',
+                }
+            );
         }
-        );
-    }
 
-    const user = await User.findOne({ email: email });
+        const user = await User.findOne({ email: email });
 
-    if (!user) {
-        return res.status(400).json(
-        {
-            message: 'Account does not exist; please register',
+        console.log("req.body", user)
+
+        if (!user) {
+            return res.status(400).json(
+                {
+                    message: 'Account does not exist; please register',
+                }
+            );
         }
-        );
-    }
 
-    const isMatch = await bcrypt.compare(password, user.password);
+        const isMatch = await bcrypt.compare(password, user.password);
 
-    if (!isMatch) {
-        return res.status(400).json(
-        {
-            message: 'Invalid login credentials'
+        if (!isMatch) {
+            return res.status(400).json(
+                {
+                    message: 'Invalid login credentials'
+                }
+            );
         }
+
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+
+        res.json(
+            {
+                token: "Bearer " + token,
+                user: {
+                    id: user._id
+                },
+                username: user.userName,
+            },
         );
-    }
-
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
-
-    res.json(
-        {
-        token,
-        user: {
-            id: user._id
-        },
-        username: user.username,
-        },
-    );
 
     } catch (err) {
-    res.status(500).json(
-        {
-        error: err.message,
-        }
-    );
+        res.status(500).json(
+            {
+                error: err.message,
+            }
+        );
     }
 });
 
