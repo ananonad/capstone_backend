@@ -39,6 +39,14 @@ router.delete("/:id", async (req, res) => {
     } catch (error) {
         res.status(400).json(error)
     }
-})
+});
+
+router.get("/:id", async (req, res) => {
+    try {
+        res.json(await List.findOne({"_id": req.params.id})); 
+    } catch (error) {
+        res.status(400).json(error)
+    }
+});
 
 module.exports = router
